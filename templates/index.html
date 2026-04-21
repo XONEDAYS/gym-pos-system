@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gym POS</title>
+</head>
+<body>
+<a href="/members">View Members</a>
+<h1>🏋️ Gym POS</h1>
+
+<form action="/pay" method="post">
+    <input type="text" name="name" placeholder="Customer Name" required>
+
+    <select name="item" onchange="updatePrice(this)">
+        <option value="Monthly" data-price="1500">Monthly</option>
+        <option value="Day Pass" data-price="200">Day Pass</option>
+        <option value="Drink" data-price="50">Drink</option>
+    </select>
+    
+    <input type="number" id="amount" readonly>
+
+    <button type="submit">Mark as Paid</button>
+</form>
+
+<h2>Recent Transactions</h2>
+
+<table border="1">
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Item</th>
+    <th>Amount</th>
+    <th>Date</th>
+
+</tr>
+
+{% for t in transactions %}
+<tr>
+    <td>{{ t[0] }}</td>
+    <td>{{ t[1] }}</td>
+    <td>{{ t[2] }}</td>
+    <td>{{ t[3] }}</td>
+    <td>{{ t[4] }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<script>
+    function updatePrice(select) {
+        var price = select.options[select.selectedIndex].getAttribute("data-price");
+        document.getElementById("amount").value = price;
+    }
+</script>
+
+{% if message %}
+<p>{{ message }}</p>
+{% endif %}
+
+{% if qr %}
+    <h3>Membership QR</h3>
+    <img src="{{ qr }}" width="200">
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Members</title>
+</head>
+<body>
+<th>Action</th>
+<h1>👥 Members</h1>
+
+<table border="1">
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Expiry</th>
+    <th>Status</th>
+</tr>
+
+{% for m in members %}
+<tr>
+    <td>{{ m.id }}</td>
+    <td>{{ m.name }}</td>
+    <td>{{ m.expiry }}</td>
+    <td>{{ m.status }}</td>
+    <td>
+        <form action="/renew/{{ m.id }}" method="post">
+            <button type="submit">Renew</button>
+        </form>
+    </td>
+</tr>
+{% endfor %}
+
+</table>
+
+</body>
+</html>

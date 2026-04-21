@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scan QR</title>
+</head>
+<body>
+
+<h1>📷 Scan QR Code</h1>
+
+<video id="preview" width="300"></video>
+
+<!-- sound effects -->
+<audio id="successSound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
+<audio id="errorSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<script>
+function onScanSuccess(decodedText) {
+
+    // play success sound
+    document.getElementById("successSound").play();
+
+    // redirect after short delay
+    setTimeout(() => {
+        window.location.href = decodedText;
+    }, 300);
+}
+
+const html5QrCode = new Html5Qrcode("preview");
+
+Html5Qrcode.getCameras().then(devices => {
+    if (devices && devices.length) {
+        let cameraId = devices[0].id;
+
+        html5QrCode.start(
+            cameraId,
+            { fps: 10, qrbox: 250 },
+            onScanSuccess
+        );
+    }
+});
+</script>
+
+</body>
+</html>
