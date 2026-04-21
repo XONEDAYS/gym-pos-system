@@ -8,6 +8,8 @@ import qrcode
 from fastapi.staticfiles import StaticFiles
 import os
 
+USERNAME = "admin"
+PASSWORD = "1234"
 BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:8000")
 
 app = FastAPI()
@@ -217,4 +219,31 @@ def scan(request: Request):
         name="scan.html",
         context={}
     )
+@app.get("/login", response_class=HTMLResponse)
+def login_page(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="login.html",
+        context={}
+    )
+
+
+@app.post("/login")
+def login(username: str = Form(...), password: str = Form(...)):
+
+    if username == USERNAME and password == PASSWORD:
+        response = RedirectResponse(url="/", status_code=303)
+        response.set_cookie(key="user", value="loggedin")
+        return response
+
+    return RedirectResponse(url="/login", status_code=303)
+def check_auth(request: Request):
+    if request.cookies.get("user") != "loggedin":
+        return False
+    return True
+@app.get("/logout")
+def logout():
+    response = RedirectResponse(url="/login", status_code=303)
+    response.delete_cookie("user")
+    return response
 

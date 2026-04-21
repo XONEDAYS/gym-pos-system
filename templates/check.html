@@ -1,6 +1,29 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Scan Result</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial;
+        }
+        .valid {
+            color: green;
+            font-size: 40px;
+        }
+        .invalid {
+            color: red;
+            font-size: 40px;
+        }
+    </style>
+</head>
 <body>
+    <div style="margin-bottom:20px;">
+        <a href="/">🏠 Home</a> |
+        <a href="/scan">📷 Scan</a> |
+        <a href="/members">👥 Members</a> |
+        <a href="/logout">🚪 Logout</a>
+    </div>
 
 <h1>Scan Result</h1>
 
@@ -8,7 +31,17 @@
 <p>Name: {{ name }}</p>
 {% endif %}
 
-<h2>{{ status }}</h2>
-
+{% if "Valid" in status %}
+    <h2 style="color: green; font-size: 50px;">✅ ACCESS GRANTED</h2>
+{% else %}
+    <h2 style="color: red; font-size: 50px;">❌ ACCESS DENIED</h2>
+{% endif %}
+{% if auto_return %}
+<script>
+    setTimeout(() => {
+        window.location.href = "/scan";
+    }, 2000); // 2 seconds
+</script>
+{% endif %}
 </body>
 </html>
