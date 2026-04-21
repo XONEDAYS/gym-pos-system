@@ -7,8 +7,6 @@ from datetime import datetime, timedelta
 import qrcode
 from fastapi.staticfiles import StaticFiles
 
-
-
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
@@ -86,7 +84,8 @@ def pay(request: Request, name: str = Form(...), item: str = Form(...)):
 
         member_id = c.lastrowid
 
-        url = f"http://127.0.0.1:8000/check/{member_id}"
+        BASE_URL = "https://gym-pos-system.onrender.com"
+        url = f"{BASE_URL}/check/{member_id}"
         img = qrcode.make(url)
         img.save(f"static/{member_id}.png")
 
