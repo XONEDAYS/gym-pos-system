@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gym POS</title>
 </head>
 <body>
-<a href="/members">View Members</a>
-<a href="/scan">Scan</a>
+<div style="margin-bottom:20px;">
+    <a href="/">🏠 Home</a> |
+    <a href="/scan">📷 Scan</a> |
+    <a href="/members">👥 Members</a> |
+    <a href="/logout">🚪 Logout</a>
+</div>
 <h1>🏋️ Gym POS</h1>
 
 <form action="/pay" method="post">
@@ -19,7 +24,9 @@
     
     <input type="number" id="amount" readonly>
 
-    <button type="submit">Mark as Paid</button>
+    <button type="submit" style="font-size:20px;padding:10px;">
+        💰 Mark as Paid
+    </button>
 </form>
 
 <h2>Recent Transactions</h2>
